@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title th:text="${pageTitle}"></title>
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/font-awesome.css}" />
+<script type="text/javascript" th:src="@{/resources/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12" style="margin-top: 10px;">
+				<form action="#" th:action="@{/updateUserInfo}" th:object="${users}" method="POST">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 style="margin: 0">Save User Information</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="form-group col-md-12">
+									<input type="text" th:field="*{uid}" class="form-control" readonly="">
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label>First Name</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span> <input type="text" name="firstName" th:field="*{firstName}" class="form-control" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>Last Name</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span> <input type="text" name="lastName" th:field="*{lastName}" class="form-control" required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label>Email</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span> <input type="email" name="email" th:field="*{email}" class="form-control" required />
+								</div>
+								<div class="form-group col-md-6">
+									<label>Password</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> <input type="text" name="password" th:field="*{password}" class="form-control" required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label>Date Of Birth</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span> <input type="datetime" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control" placeholder="ex: date-Month-year" required />
+								</div>
+								<div class="form-group col-md-6">
+									<label>District</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></span> <select th:field="*{district}" class="form-control">
+										<option th:each="district : ${allDistricts}" th:value="${district}" th:text="${district}">Districts</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label>Gender</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+									<div class="input-group">
+										<input type="radio" name="gender" value="male" checked="1" /> Male <input type="radio" name="gender" value="female" /> Female
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Hobbies</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('hobbies')}" th:errors="*{hobbies}"></span>
+									<div class="input-group">
+										<span th:each="hobbies : ${allHobbies}" style="margin-right: 5px;"> <input type="checkbox" th:field="*{hobbies}" th:value="${hobbies}" /> <span th:text="${hobbies}"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label>Language(s)</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('languages')}" th:errors="*{languages}"></span> <select th:field="*{languages}" class="form-control" multiple="1">
+										<option th:each="languages : ${allLanguages}" th:value="${languages}" th:text="${languages}">languages</option>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Address</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+									<textarea name="address" th:field="*{address}" class="form-control" rows="3" required></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<button type="submit" name="submitBtn" class="btn btn-success">Update</button>
+							<a th:href="@{/}" class="btn btn-warning pull-right">Back to List</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>

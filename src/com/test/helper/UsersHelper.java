@@ -1,12 +1,7 @@
 package com.test.helper;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.test.entity.UsersList;
 
 @Component
 public class UsersHelper {
@@ -14,14 +9,6 @@ public class UsersHelper {
 	private ArrayList<String> hobbies;
 	private ArrayList<String> languages;
 	private ArrayList<String> districts;
-	private int generatedId;
-
-	@Autowired
-	private UsersList usersList;
-
-	public int getGeneratedUserId() {
-		return usersList.getAllUsers().size() + 1;
-	}
 
 	public ArrayList<String> getUsersDistricts() {
 		districts = new ArrayList<>();

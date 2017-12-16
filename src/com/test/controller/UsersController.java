@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,7 +39,6 @@ public class UsersController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String loadFormPage(Model model) {
 		Users users = new Users();
-		users.setUid(usersList.getAllUsers().size() + 1);
 		model.addAttribute("pageTitle", "Home");
 		model.addAttribute("users", users);
 		model.addAttribute("usersList", usersList.getAllUsers());
@@ -58,7 +59,60 @@ public class UsersController {
 			model.addAllAttributes(map);
 			return "index";
 		}
+		int generatedId = 1;
+		if (usersList.getAllUsers().size() != 0) {
+			generatedId = usersList.getAllUsers().get(usersList.getAllUsers().size() - 1).getUid() + 1;
+		}
+		users.setUid(generatedId);
 		usersList.getAllUsers().add(users);
+		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/editUser/{uid}", method = RequestMethod.GET)
+	public String editUser(Model model, @PathVariable("uid") int uid) {
+		ArrayList<Users> list = usersList.getAllUsers();
+		for (Users u : list) {
+			if (u.getUid() == uid) {
+				model.addAttribute("users", u);
+				model.addAttribute("usersList", usersList.getAllUsers());
+				model.addAttribute("allHobbies", new UsersHelper().getUsersHobbies());
+				model.addAttribute("allLanguages", new UsersHelper().getUsersLanguages());
+				model.addAttribute("allDistricts", new UsersHelper().getUsersDistricts());
+			}
+		}
+
+		return "editUser";
+	}
+
+	@RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+	public String updateUserInfo(Model model, @Valid @ModelAttribute("users") Users users, BindingResult result) {
+		ArrayList<Users> tempList = new ArrayList<>();
+		for (Users u : usersList.getAllUsers()) {
+			if (u.getUid() != users.getUid()) {
+				tempList.add(u);
+			} else {
+				tempList.add(users);
+			}
+		}
+		usersList.getAllUsers().clear();
+		for (Users u : tempList) {
+			usersList.getAllUsers().add(u);
+		}
+		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/deleteUser/{uid}", method = RequestMethod.GET)
+	public String deleteUsersInfo(Model model, @PathVariable("uid") int uid) {
+		ArrayList<Users> tempList = new ArrayList<>();
+		for (Users u : usersList.getAllUsers()) {
+			if (u.getUid() != uid) {
+				tempList.add(u);
+			}
+		}
+		usersList.getAllUsers().clear();
+		for (Users u : tempList) {
+			usersList.getAllUsers().add(u);
+		}
 		return "redirect:/";
 	}
 }

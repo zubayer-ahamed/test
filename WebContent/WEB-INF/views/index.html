@@ -14,48 +14,33 @@
 		<div class="row">
 			<div class="col-md-12" style="margin-top: 10px;">
 				<form action="#" th:action="@{/saveUserInfo}" th:object="${users}" method="POST">
-					<!-- <ul style="color: red;">
-						<li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr"><span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> | <span th:text="${e.message}">The error message</span></li>
-					</ul> -->
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h4 style="margin: 0">Save User Information</h4>
 						</div>
 						<div class="panel-body">
 							<div class="row">
-								<div class="form-group col-md-12">
-									<label>ID</label>
-									<input type="text" name="uid" th:field="*{uid}" class="form-control" readonly/>
+								<div class="form-group col-md-6">
+									<label>First Name</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span> <input type="text" name="firstName" th:field="*{firstName}" class="form-control" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>Last Name</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span> <input type="text" name="lastName" th:field="*{lastName}" class="form-control" required />
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
-									<label>First Name</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-									<input type="text" name="firstName" th:field="*{firstName}" class="form-control" />
+									<label>Email</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span> <input type="email" name="email" th:field="*{email}" class="form-control" required />
 								</div>
 								<div class="form-group col-md-6">
-									<label>Last Name</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-									<input type="text" name="lastName" th:field="*{lastName}" class="form-control" required />
+									<label>Password</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> <input type="password" name="password" th:field="*{password}" class="form-control" required />
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
-									<label>Email</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-									<input type="email" name="email" th:field="*{email}" class="form-control" required />
+									<label>Date Of Birth</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span> <input type="datetime" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control" placeholder="ex: date-Month-year" required />
 								</div>
 								<div class="form-group col-md-6">
-									<label>Password</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-									<span style="color: red;" class="pull-right" th:if="${#fields.hasErrors('*')}" th:text="${password}">Incorrect date</span> <input type="password" name="password" th:field="*{password}" class="form-control" required />
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col-md-6">
-									<label>Date Of Birth</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
-									<input type="datetime" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control" placeholder="ex: date-Month-year" required />
-								</div>
-								<div class="form-group col-md-6">
-									<label>District</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></span>
-									<select th:field="*{district}" class="form-control">
+									<label>District</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></span> <select th:field="*{district}" class="form-control">
 										<option th:each="district : ${allDistricts}" th:value="${district}" th:text="${district}">Districts</option>
 									</select>
 								</div>
@@ -70,16 +55,14 @@
 								<div class="form-group col-md-6">
 									<label>Hobbies</label><span class="pull-right text-danger" th:if="${#fields.hasErrors('hobbies')}" th:errors="*{hobbies}"></span>
 									<div class="input-group">
-										<span th:each="hobbies : ${allHobbies}" style="margin-right: 5px;">
-											<input type="checkbox" th:field="*{hobbies}" th:value="${hobbies}"/> <span th:text="${hobbies}"></span>									
+										<span th:each="hobbies : ${allHobbies}" style="margin-right: 5px;"> <input type="checkbox" th:field="*{hobbies}" th:value="${hobbies}" /> <span th:text="${hobbies}"></span>
 										</span>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
-									<label>Language(s)</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('languages')}" th:errors="*{languages}"></span>
-									<select th:field="*{languages}" class="form-control" multiple="1">
+									<label>Language(s)</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('languages')}" th:errors="*{languages}"></span> <select th:field="*{languages}" class="form-control" multiple="1">
 										<option th:each="languages : ${allLanguages}" th:value="${languages}" th:text="${languages}">languages</option>
 									</select>
 								</div>
@@ -97,7 +80,7 @@
 				</form>
 			</div>
 		</div>
-		
+
 		<!-- Display Data in table -->
 		<div class="row">
 			<div class="col-md-12">
@@ -119,6 +102,7 @@
 									<th>Hobbies</th>
 									<th>Languages</th>
 									<th>Address</th>
+									<th colspan="2">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -133,6 +117,8 @@
 									<td th:text="${{u.hobbies}}"></td>
 									<td th:text="${{u.languages}}"></td>
 									<td th:text="${{u.address}}"></td>
+									<td><a th:href="@{/editUser/} + ${{u.uid}}" class="btn btn-primary">Edit</a></td>
+									<td><a th:href="@{/deleteUser/} + ${{u.uid}}" class="btn btn-danger">Delete</a></td>
 								</tr>
 							</tbody>
 						</table>
