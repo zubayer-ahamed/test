@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.entity.IdGenerator;
 import com.test.entity.Users;
 import com.test.entity.UsersList;
 import com.test.helper.UsersHelper;
@@ -29,12 +31,14 @@ public class UsersController {
 
 	@Autowired
 	private UsersList usersList;
+	@Autowired
+	private IdGenerator idGenerator;
 
-	@InitBinder
-	public void myInitBinder(WebDataBinder binder) {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		binder.registerCustomEditor(Date.class, "dateOfBirth", new CustomDateEditor(format, false));
-	}
+//	@InitBinder
+//	public void myInitBinder(WebDataBinder binder) {
+//		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+//		binder.registerCustomEditor(Date.class, "dateOfBirth", new CustomDateEditor(format, false));
+//	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String loadFormPage(Model model) {
@@ -60,10 +64,11 @@ public class UsersController {
 			return "index";
 		}
 		int generatedId = 1;
-		if (usersList.getAllUsers().size() != 0) {
-			generatedId = usersList.getAllUsers().get(usersList.getAllUsers().size() - 1).getUid() + 1;
+		if (idGenerator.getId() != 0) {
+			generatedId = idGenerator.getId() + 1;
 		}
 		users.setUid(generatedId);
+		idGenerator.setId(generatedId);
 		usersList.getAllUsers().add(users);
 		return "redirect:/";
 	}

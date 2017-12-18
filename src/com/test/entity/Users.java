@@ -32,9 +32,7 @@ public class Users {
 	private String email;
 	@Size(min = 4, max = 8, message = "Password must be between 4 to 8 characters")
 	private String password;
-	@Past
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
 	@NotEmpty(message = "Fist name should not be empty")
 	private String district;

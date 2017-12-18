@@ -6,8 +6,11 @@
 <title th:text="${pageTitle}"></title>
 <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/resources/css/font-awesome.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/datepicker.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
 <script type="text/javascript" th:src="@{/resources/js/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/resources/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
 </head>
 <body>
 	<div class="container">
@@ -37,7 +40,8 @@
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
-									<label>Date Of Birth</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span> <input type="datetime" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control" placeholder="ex: date-Month-year" required />
+									<label>Date Of Birth</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span> 
+									<input type="date" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control" placeholder="ex: date-Month-year" required />
 								</div>
 								<div class="form-group col-md-6">
 									<label>District</label> <span class="pull-right text-danger" th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></span> <select th:field="*{district}" class="form-control">
@@ -128,5 +132,10 @@
 			</div>
 		</div>
 	</div>
+	<!-- <script type="text/javascript">
+		$(function() {
+			$('#dateOfBirth').datepicker();
+		});
+	</script> -->
 </body>
 </html>
